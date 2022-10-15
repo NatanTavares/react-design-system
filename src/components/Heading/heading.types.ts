@@ -4,4 +4,5 @@ export type HeadingProps = {
   children: ReactNode;
   size?: 'sm' | 'md' | 'lg';
   asChild?: boolean;
+  className?: string;
 };
