@@ -12,7 +12,11 @@ module.exports = {
   },
   features: {
     storyStoreV7: true,
+    interactionsDebugger: true,
   },
+  staticDirs: [
+    '../public'
+  ],
   vite: (config, { configType }) => {
     if (!configType === 'PRODUCTION') return config;
     config.base = '/react-design-system/';

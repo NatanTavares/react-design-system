@@ -1,11 +1,26 @@
 import { Envelope, Lock } from 'phosphor-react';
+import { FormEvent, useState } from 'react';
 import { TextInput, Button, Checkbox } from '../../components/Form';
 import { Heading } from '../../components/Heading';
 import { Text } from '../../components/Text';
 import { ReactLogoSVG } from '../../ReactLogoSVG';
 import { SignInPageProps } from './SignIn.types';
+import axios from 'axios'
 
 export const SignIn: React.FC<SignInPageProps> = () => {
+  const [isUserSignedIn, setIsUserSignedIn] = useState(false);
+
+  const handleSignIn = async (event: FormEvent) => {
+    event.preventDefault();
+
+    await axios.post('/sessions', {
+      email: 'johdoe@example.com',
+      password: '12345678',
+    })
+
+    setIsUserSignedIn(true)
+  };
+
   return (
     <div className='w-screen h-screen bg-gray-900 flex flex-col items-center justify-center text-gray-100'>
       <header className='flex flex-col items-center'>
@@ -19,7 +34,12 @@ export const SignIn: React.FC<SignInPageProps> = () => {
         </Text>
       </header>
 
-      <form className='w-full max-w-sm mt-10 flex flex-col gap-4 items-stretch'>
+      <form
+        className='w-full max-w-sm mt-10 flex flex-col gap-4 items-stretch'
+        onSubmit={handleSignIn}
+      >
+        { isUserSignedIn && <Text>Login realizado!</Text> }
+
         <label htmlFor='email' className='flex flex-col gap-3'>
           <Text className='font-semibold'>Endereço de e-mail</Text>
           <TextInput.Root>
@@ -29,7 +49,7 @@ export const SignIn: React.FC<SignInPageProps> = () => {
             <TextInput.Field
               id='email'
               type='email'
-              placeholder='Digite seu email'
+              placeholder='Digite seu e-mail'
             />
           </TextInput.Root>
         </label>
